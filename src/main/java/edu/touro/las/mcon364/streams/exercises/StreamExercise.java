@@ -96,7 +96,7 @@ public class StreamExercise {
         //return (double) count / grades.size();
 
         //or
-        return gradebook.get(studentName).stream().mapToInt(n -> n).average().orElse(0.0);
+        return getStudentGrades(studentName).stream().mapToInt(Integer::intValue).average().orElse(0.0);
 
     }
     
@@ -109,7 +109,7 @@ public class StreamExercise {
         // TODO: Implement using streams
         // Hint: Use flatMap() to flatten the lists
         //return gradebook.entrySet().stream().sorted().flatMap(k -> gradebook.get(k).stream()).collect(Collectors.toList());
-        return gradebook.values().stream().flatMap(list -> list.stream()).toList();
+        return gradebook.values().stream().flatMap(list -> list.stream()).sorted().toList();
     }
     
     /**
@@ -249,11 +249,12 @@ public class StreamExercise {
         // TODO: Implement using streams
         // Hint: Use max() with a comparator based on average
         //return gradebook.keySet().stream().findFirst(getStudentAverages().values().stream().max(Map.Entry::getValue));
-        var mapofsudentsandaverages = gradebook.entrySet().stream().collect(Collectors
-                .toMap(entry -> entry.getKey(),
-                        entry -> entry.getValue().stream().mapToInt(x -> x).average().orElse(0.0)));
-        return mapofsudentsandaverages.entrySet().stream().collect(Collectors.maxBy(Comparator.comparingDouble(Map.Entry::getValue))).get().getKey();
-
+//        var mapofsudentsandaverages = gradebook.entrySet().stream().collect(Collectors
+//                .toMap(entry -> entry.getKey(),
+//                        entry -> entry.getValue().stream().mapToInt(x -> x).average().orElse(0.0)));
+//        return mapofsudentsandaverages.entrySet().stream().collect(Collectors.maxBy(Comparator.comparingDouble(Map.Entry::getValue))).get().getKey();
+//a simpler way to write this would be.
+        return gradebook.keySet().stream().max(Comparator.comparingDouble(this::calculateAverage)).orElse("");
 
     }
 
