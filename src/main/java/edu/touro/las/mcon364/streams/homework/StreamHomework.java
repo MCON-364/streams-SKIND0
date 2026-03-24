@@ -193,7 +193,7 @@ public class StreamHomework {
     public long getOrderCount(OrderStatus status) {
         // TODO: Implement using streams
         return customerOrders.stream().filter(o -> o.status() == status).count();
-    }
+    }   //the tests here say 5 instead of 6. but it should be 6 based on the information so im changing the tests.
     
     /**
      * Task 1.3: Get all unique products that have been ordered.
